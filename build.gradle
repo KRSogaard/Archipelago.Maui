@@ -1,0 +1,95 @@
+buildscript {
+    ext {
+        springBootVersion = '2.2.1.RELEASE'
+    }
+
+    repositories {
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            name = "Wewelo Repo"
+            url "s3://${weweloRepo}"
+            credentials(AwsCredentials) {
+                accessKey weweloRepoUser
+                secretKey weweloRepoPassword
+            }
+        }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven {
+            //Local DynamoDB repository
+            url "https://s3-us-west-2.amazonaws.com/dynamodb-local/release"
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    sourceCompatibility = 11
+    targetCompatibility = 11
+
+    dependencies {
+        // Test framework
+        testImplementation group: 'junit', name: 'junit', version: '4.12'
+        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.+'
+
+        implementation 'org.slf4j:slf4j-api:1.7.25'
+
+        // Google Guava
+        implementation 'com.google.guava:guava:28.0-jre'
+        implementation 'org.apache.commons:commons-lang3:3.0'
+
+        testImplementation 'commons-io:commons-io:2.6'
+
+        // Lombok
+        implementation 'org.projectlombok:lombok:1.18.12'  // utilities for POJOs
+        annotationProcessor 'org.projectlombok:lombok:1.18.12'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+    }
+
+    sourceSets {
+        main.java.srcDirs = ['src']
+        main.resources.srcDirs = ['resources']
+        test.java.srcDirs = ['tst']
+        test.resources.srcDirs = ['tst/resources']
+    }
+}
+
+
+project(':Maui') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'application'
+
+    mainClassName = 'build.archipelago.maui.Application'
+
+    dependencies {
+        implementation project(':Maui.Core')
+
+        implementation 'org.springframework.boot:spring-boot-starter'
+        compile 'info.picocli:picocli:4.1.4'
+        annotationProcessor 'info.picocli:picocli-codegen:4.1.4'
+    }
+
+    compileJava {
+        options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+    }
+}
+project(':Maui.Core') {
+    dependencies {
+        implementation 'build.archipelago:common:1.+'
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0'
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
+    }
+}
