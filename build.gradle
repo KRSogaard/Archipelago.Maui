@@ -76,6 +76,7 @@ project(':Maui') {
 
     dependencies {
         implementation project(':Maui.Core')
+        implementation project(':Maui.Serializer')
 
         implementation 'org.springframework.boot:spring-boot-starter'
         compile 'info.picocli:picocli:4.1.4'
@@ -88,6 +89,16 @@ project(':Maui') {
 }
 project(':Maui.Core') {
     dependencies {
+        implementation project(':Maui.Serializer')
+
+        implementation 'build.archipelago:common:1.+'
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0'
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
+    }
+}
+project(':Maui.Serializer') {
+    dependencies {
+        implementation project(':Maui.Core')
         implementation 'build.archipelago:common:1.+'
         implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0'
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.2.3'

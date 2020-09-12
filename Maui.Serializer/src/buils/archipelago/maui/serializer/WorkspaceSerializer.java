@@ -1,8 +1,7 @@
-package build.archipelago.maui.core.workspace.serializer;
+package buils.archipelago.maui.serializer;
 
 import build.archipelago.common.ArchipelagoPackage;
 import build.archipelago.maui.core.workspace.Workspace;
-import build.archipelago.maui.core.workspace.WorkspaceConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.Builder;

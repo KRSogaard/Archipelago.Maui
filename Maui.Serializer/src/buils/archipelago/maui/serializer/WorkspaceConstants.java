@@ -1,4 +1,4 @@
-package build.archipelago.maui.core.workspace;
+package buils.archipelago.maui.serializer;
 
 public class WorkspaceConstants {
     public static final String WORKSPACE_FILE_NAME = "ws.archipelago";

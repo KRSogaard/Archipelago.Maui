@@ -1,3 +1,4 @@
 include 'Maui'
 include 'Maui.Core'
+include 'Maui.Serializer'
 

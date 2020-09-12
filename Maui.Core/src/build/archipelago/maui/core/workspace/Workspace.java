@@ -1,7 +1,7 @@
 package build.archipelago.maui.core.workspace;
 
 import build.archipelago.common.ArchipelagoPackage;
-import build.archipelago.maui.core.workspace.serializer.WorkspaceSerializer;
+import buils.archipelago.maui.serializer.WorkspaceSerializer;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
